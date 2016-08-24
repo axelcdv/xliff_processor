@@ -35,12 +35,12 @@ def test_parse_multi_line(multi_source_line):
 def parse_multi_note():
     lines = [
         '<note>Account: advanced settings',
-        'Thermo advanced settings title</note>',
+        'advanced settings title</note>',
     ]
     parser = TagParser(tag='note')
     assert not parser.parse_line(lines[0])
     assert parser.parse_line(lines[1])
-    assert parser.content == ['Account: advanced settings', 'Thermo advanced settings title']
+    assert parser.content == ['Account: advanced settings', 'advanced settings title']
 
 
 @pytest.fixture()
@@ -68,7 +68,7 @@ def test_parse_trans_unit(trans_unit):
 @pytest.fixture()
 def file_lines():
     return [
-        '<file original="SensePeanut/en.lproj/Localizable.strings" datatype="plaintext" xml:space="preserve" source-language="en" target-language="en">',
+        '<file original="MyProject/en.lproj/Localizable.strings" datatype="plaintext" xml:space="preserve" source-language="en" target-language="en">',
         '<header>',
         '<tool tool-id="lokalise.co" tool-name="Lokalise"/>',
         '</header>',
@@ -77,20 +77,20 @@ def file_lines():
         '<trans-unit id="--">',
         '<source>--</source>',
         '<target>Retrieving temperature</target>',
-        '<note>Thermo status: default title</note>',
+        '<note>Default title</note>',
         '</trans-unit>',
 
         '<trans-unit id="Advanced settings">',
         '<source>Advanced settings</source>',
         '<target>Advanced settings</target>',
         '<note>Account: advanced settings',
-        'Thermo advanced settings title</note>',
+        'Settings view title</note>',
         '</trans-unit>',
 
         '<trans-unit id="CSV Help text">',
         '<source>CSV Help text</source>',
-        '<target>Download all the measurements made by your ThermoPeanut in a .CSV file. Enter the start and end date of your desired period. You will receive the file by email.</target>',
-        '<note>Thermo CSV export help text</note>',
+        '<target>Download all the measurements made by your thermostat in a .CSV file. Enter the start and end date of your desired period. You will receive the file by email.</target>',
+        '<note>CSV export help text</note>',
         '</trans-unit>',
 
         '</file>'
@@ -108,7 +108,7 @@ def test_parse_file(file_lines):
         parser.parse_line(line)
 
     assert len(parser.units) == 3
-    assert parser.original == 'SensePeanut/en.lproj/Localizable.strings'
+    assert parser.original == 'MyProject/en.lproj/Localizable.strings'
     assert parser.source_language == 'en'
     assert parser.target_language == 'en'
     assert parser.target_filename== 'Localizable.strings'
